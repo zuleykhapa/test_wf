@@ -28,7 +28,7 @@ def count_consecutive_failures():
         WHERE conclusion = 'success'
         LIMIT 1
     """).fetchone()
-    failures = result[0] if result else 0
+    failures = result[0] if result else 'None'
 
     if failures > 0:
         failures_list = "failures_list.md"
