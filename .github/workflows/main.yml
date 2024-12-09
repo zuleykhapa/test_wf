@@ -33,5 +33,5 @@ jobs:
           python scripts/count_consecutive_failures.py input_${{ matrix.nightly_build }}.json --nightly_build ${{ matrix.nightly_build }}
       - uses: actions/upload-artifact@v4
         with:
-          path: run_status_${{ matrix.nightly_build }}.md
+          path: nightly_failures_${{ matrix.nightly_build }}.md
           name: ${{ matrix.nightly_build }}
