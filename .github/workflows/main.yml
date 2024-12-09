@@ -5,6 +5,8 @@ on:
   workflow_dispatch:
   push:
 
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 permissions:
   contents: read
   issues: write
