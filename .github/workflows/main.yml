@@ -1,0 +1,29 @@
+name: Verify Build Status & Build Functionality (Calling)
+on:
+  schedule:
+    - cron: 0 5 * * * # runs at 6am CET DAILY
+  workflow_dispatch:
+  push:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+ check-nightly-builds:
+    name: Check Nightly Build failures
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        nightly_build: [ 'Python', 'LinuxRelease', 'Android', 'Julia', 'Main', 'OSX', 'R', 'Swift', 'SwiftRelease', 'Windows' ]
+    steps:
+      - name: Create run status report for ${{ matrix.nightly_build }} nighlty-builds
+        continue-on-error: true
+        run: |
+          # write list of last runs for specified workflow to a json file
+          gh run list --repo duckdb/duckdb --workflow ${{ matrix.nightly_build }} \
+            --json event,status,conclusion,name,createdAt,url \
+            --event repository_dispatch > input_${{ matrix.nightly_build }}.json
+          
+          # count consecutive failures and create a run_status.md file
+          python scripts/count_consecutive_failures.py input_${{ matrix.nightly_build }}.json --nightly_build ${{ matrix.nightly_build }}
