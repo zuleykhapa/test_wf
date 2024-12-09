@@ -16,7 +16,7 @@ input_file = args.input_file
 nightly_build = args.nightly_build
 
 def count_consecutive_failures():
-    failures = duckdb.sql(f"""
+    result = duckdb.sql(f"""
         SELECT
             row_nr - 1
         FROM (
@@ -27,7 +27,8 @@ def count_consecutive_failures():
             )
         WHERE conclusion = 'success'
         LIMIT 1
-    """).fetchone()[0]
+    """).fetchone()
+    failures = result[0] if result else 0
 
     if failures > 0:
         failures_list = "failures_list.md"
