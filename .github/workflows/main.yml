@@ -12,7 +12,7 @@ permissions:
 jobs:
  check-nightly-builds:
     name: Check Nightly Build failures
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         nightly_build: [ 'Python', 'LinuxRelease', 'Android', 'Julia', 'Main', 'OSX', 'R', 'Swift', 'SwiftRelease', 'Windows' ]
