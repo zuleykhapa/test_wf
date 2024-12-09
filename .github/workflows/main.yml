@@ -19,6 +19,7 @@ jobs:
       matrix:
         nightly_build: [ 'Python', 'LinuxRelease', 'Android', 'Julia', 'Main', 'OSX', 'R', 'Swift', 'SwiftRelease', 'Windows' ]
     steps:
+      - uses: actions/checkout@v4
       - name: Create run status report for ${{ matrix.nightly_build }} nighlty-builds
         continue-on-error: true
         run: |
