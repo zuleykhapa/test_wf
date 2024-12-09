@@ -27,7 +27,7 @@ jobs:
           # write list of last runs for specified workflow to a json file
           gh run list --repo duckdb/duckdb --workflow ${{ matrix.nightly_build }} \
             --json event,status,conclusion,name,createdAt,url \
-            --event repository_dispatch > input_${{ matrix.nightly_build }}.json
+            --event repository_dispatch -L 50 > input_${{ matrix.nightly_build }}.json
           
           # count consecutive failures and create a run_status.md file
           python scripts/count_consecutive_failures.py input_${{ matrix.nightly_build }}.json --nightly_build ${{ matrix.nightly_build }}
